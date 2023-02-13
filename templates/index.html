@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <style>
+            body {
+                background-color: #303030;
+                color: white;
+                font-family: Arial, sans-serif;
+            }
+            #container {
+                width: 70%;
+                margin: 30px auto;
+            }
+            #input-container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 30px;
+            }
+            #key {
+                padding: 10px 15px;
+                font-size: 16px;
+                border-radius: 5px 0 0 5px;
+                border: none;
+                background-color: #404040;
+                color: white;
+            }
+            #submit {
+                padding: 10px 15px;
+                font-size: 16px;
+                border-radius: 0 5px 5px 0;
+                border: none;
+                background-color: #00bfff;
+                color: white;
+                cursor: pointer;
+            }
+            .job-container {
+                background-color: #404040;
+                padding: 20px;
+                border-radius: 5px;
+                margin-bottom: 30px;
+            }
+            .title {
+                font-weight: bold;
+                margin-bottom: 5px;
+                font-size: 18px;
+            }
+            .link {
+                color: #00bfff;
+                text-decoration: none;
+                margin-bottom: 10px;
+                font-size: 16px;
+            }
+            .role {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            function getJobs() {
+                var key = $('#key').val();
+                $.get("http://127.0.0.1:5000/get?key=" + key, function(data, status) {
+                    $("#result").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#result").append("<div class='job-container'><h4 class='title'>" + data[i].title + "</h4><a class='link' href='" + data[i].link + "'>" + data[i].link + "</a><p class='role'>" + data[i].role + "</p></div>");
+                    }
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <div id="container">
+            <div id="input-container">
+                <input type="text" id="key" placeholder="Enter Keywords">
+                <button id="submit" onclick="getJobs()">Get Jobs</button>
+            </div>
+            <div id="result"></div>
+        </div>
+    </body>
+</html>
